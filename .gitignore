@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Project management
+TODO.md
+export_structure.py
+project_structure.txt
+folder_structure.txt
