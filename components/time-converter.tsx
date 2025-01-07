@@ -26,7 +26,6 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
   const [currentFromTime, setCurrentFromTime] = useState("");
   const [reminderSet, setReminderSet] = useState(false);
   const [reminders, setReminders] = useState<Reminder[]>([]);
-  const [audioEnabled, setAudioEnabled] = useState(false);
   const [fromZone, setFromZone] = useState(Object.keys(timeZones)[0]);
   const [toZone, setToZone] = useState("Cairo");
   const [timeFormat, setTimeFormat] = useState<"24h" | "12h">("24h");
@@ -34,6 +33,8 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
   const { toast } = useToast();
+  const [audioEnabled, setAudioEnabled] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const alarmClockIconSvg = `
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alarm-clock-check" height="24" width="24">
@@ -51,16 +52,10 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
   // Initialize audio context on user interaction
   const initializeAudio = async () => {
     try {
-      if (!audioContextRef.current) {
-        audioContextRef.current = new AudioContext();
+      if (!audioRef.current) {
+        audioRef.current = new Audio("/notification.wav");
+        audioRef.current.load();
       }
-
-      if (!audioBufferRef.current) {
-        const response = await fetch("/notification.wav");
-        const arrayBuffer = await response.arrayBuffer();
-        audioBufferRef.current = await audioContextRef.current.decodeAudioData(arrayBuffer);
-      }
-
       setAudioEnabled(true);
       toast({
         title: "Audio Enabled",
@@ -77,18 +72,14 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
   };
 
   const playNotificationSound = async () => {
-    if (!audioEnabled || !audioContextRef.current || !audioBufferRef.current) {
-      return;
-    }
+    if (!audioEnabled || !audioRef.current) return;
 
     try {
-      const source = audioContextRef.current.createBufferSource();
-      source.buffer = audioBufferRef.current;
-      source.connect(audioContextRef.current.destination);
-      await audioContextRef.current.resume();
-      source.start(0);
-      source.onended = () => {};
-    } catch (error) {}
+      audioRef.current.currentTime = 0;
+      await audioRef.current.play();
+    } catch (error) {
+      console.error("Error playing notification:", error);
+    }
   };
 
   // Get the current time in the specified timezone
