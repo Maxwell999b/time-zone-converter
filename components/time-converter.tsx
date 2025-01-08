@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Bell, BellOff, Volume2, VolumeX } from "lucide-react";
 
@@ -30,8 +30,6 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
   const [toZone, setToZone] = useState("Cairo");
   const [timeFormat, setTimeFormat] = useState<"24h" | "12h">("24h");
   const [meridiem, setMeridiem] = useState<"AM" | "PM">("AM");
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const audioBufferRef = useRef<AudioBuffer | null>(null);
   const { toast } = useToast();
   const [audioEnabled, setAudioEnabled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -61,7 +59,7 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
         title: "Audio Enabled",
         description: "Notification sounds are now enabled",
       });
-    } catch (error) {
+    } catch {
       setAudioEnabled(false);
       toast({
         title: "Audio Error",
@@ -341,7 +339,7 @@ export function TimeConverter({ timeZones }: TimeConverterProps) {
   const handleTimeChange = (value: string) => {
     if (timeFormat === "24h") {
       setFromTime(value);
-      const { time, meridiem: newMeridiem } = convert24to12(value);
+      const { meridiem: newMeridiem } = convert24to12(value);
       setMeridiem(newMeridiem);
     } else {
       setFromTime(value);
