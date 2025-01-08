@@ -8,37 +8,37 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Quote Application",
+  title: "Time Zone Converter Application",
   description:
-    "The Quote Generator is a web application that provides users with random quotes based on selected categories. Users can generate a new quote by clicking a button.",
-  keywords: ["Quote", "React", "TypeScript", "Multiple Category", "happiness"],
+    "A Time Zone Converter that helps you easily convert times between different zones worldwide. Perfect for scheduling international meetings and events.",
+  keywords: ["Time Zone", "Converter", "React", "TypeScript", "International Time", "World Clock"],
   authors: [{ name: "Maxwell999b" }],
   creator: "Maxwell999b",
-  publisher: "Quote Application",
+  publisher: "Time Zone Converter",
   metadataBase: new URL("https://timezone-converterg.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://timezone-converterg.vercel.app",
-    title: "React Quote Application",
+    title: "Time Zone Converter",
     description:
-      "Get random quotes to match your vibe. Start your day with a spark of inspiration that's uniquely yours!",
-    siteName: "React Quote Application",
+      "Convert times across different time zones instantly. Perfect for coordinating across global teams and planning international events!",
+    siteName: "Time Zone Converter",
     images: [
       {
         url: "https://timezone-converterg.vercel.app/android-chrome-512x512.png",
         width: 512,
         height: 512,
-        alt: "React Quote Application",
+        alt: "Time Zone Converter",
         type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "React Quote Application",
+    title: "Time Zone Converter",
     description:
-      "Get random quotes to match your vibe. Start your day with a spark of inspiration that's uniquely yours!",
+      "Convert times across different time zones instantly. Perfect for coordinating across global teams and planning international events!",
     images: ["https://timezone-converterg.vercel.app/android-chrome-512x512.png"],
     creator: "@Maxwell999b",
   },
